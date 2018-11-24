@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    div {
+      width: 400PX;
+      height: 500px;
+      border: 1px solid grey;
+      overflow: auto
+    }
+    input {
+      margin-top: 20px;
+      height: 28px;
+      overflow: auto
+    }
+    .name {
+      margin-left: 16px;
+      width: 100px
+    }
+    p {
+      font-size: 20px;
+      margin: 14px 0;
+      height: 26px
+    }
+    .right {
+      text-align: right
+    }
+    .whoType {
+      position: absolute;
+      top: 0
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <p class="whoType"></p>
+  </div>
+  <label for="">NAME:</label><input type="text" class="name"><br>
+  <input type="text" onkeydown="typing()" class="msg">
+  <button type="submit" onclick="send()">SEND</button>
+  <script>
+    var socket = io()
+    function typing () {
+      var name = document.querySelector('.name').value
+      socket.emit('typing',name)
+    }
+    socket.on('typing',function(data){
+      document.querySelector('.whoType').innerText = data + " is typing"
+    })
+    function send () {
+      var name = document.querySelector('.name').value
+      var msg = document.querySelector('.msg').value
+      socket.emit('msg',{name:name,message:msg})
+      var node = document.createElement('p')
+      node.innerText = name + ':' + msg
+      node.classList.add('right')
+      document.querySelector('div').appendChild(node)
+      if(document.querySelector('div').scrollHeight > 490) {
+        scroll += 40
+        document.querySelector('div').scrollTop += scroll 
+      }
+    }
+    socket.on('msg',function(data){
+      document.querySelector('.whoType').innerText = ""
+      var node = document.createElement('p')
+      node.innerText = data.name + ':' + data.message
+      document.querySelector('div').appendChild(node)
+      if(document.querySelector('div').scrollHeight > 490) {
+        scroll += 40
+        document.querySelector('div').scrollTop += scroll 
+      }
+    })
+    //控制滚轮
+    var scroll = 0
+  </script>
+</body>
+</html>

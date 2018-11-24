@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0
+    }
+    input {
+      width: 400px;
+      height: 30px;
+      margin-right: 10px;
+      margin-left: 200px
+    }
+    button {
+      height: 30px
+    }
+    .hide {      
+      width: 404px;
+      margin-left: 200px;
+      background: grey;
+      display: none
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid grey;
+      border-top: 1px solid white
+    }
+    li {
+      height: 40px;
+      font-size: 26px;
+      background: white
+    }
+    li:hover {
+      text-decoration: line-through
+    }
+    .content {
+      width: 100vw;
+      height: 100vh
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <input type="text" name="name" required><button onclick="add()">SEND</button>
+    <div class="hide">
+      <ul onclick="">
+        <% docs.forEach(function(item){ %>
+          <li><%= item.name %></li>
+        <% }) %> 
+      </ul>
+    </div>
+  </div>
+  <script>
+    var show = document.querySelector('input')
+    show.addEventListener('click',function(e){
+      e.cancelBubble = true
+      console.log(e.cancelBubble)
+      document.querySelector('.hide').style.display = 'block'
+    })
+    var content = document.querySelector('.content')
+    content.addEventListener('click',function(e) {
+      document.querySelector('.hide').style.display = 'none'
+    })
+    function add () {
+      var request = new XMLHttpRequest()
+      var name = document.querySelector('input').value
+      request.open('POST','/restore/'+ name)
+      request.send()
+      location.reload()
+    }
+    var del = document.querySelector('ul')
+    del.addEventListener('click',function(e) {
+      var request = new XMLHttpRequest()
+      var name = e.target.innerText
+      console.log(name)
+      request.open('delete','/restore/'+ name)
+      request.send()
+      location.reload()
+    } ) 
+  </script>
+</body>
+</html>

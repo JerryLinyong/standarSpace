@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>联系我们</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <style>
+    body {
+      text-align: center
+    }
+    input {
+      width: 50vw;
+      height: 30px;
+      margin: 10px 20px 10px 20px;
+      font-size: 20px
+    }
+    label {
+      display: inline-block;
+      width: 6vw
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px
+    }
+  </style>
+</head>
+<body class="container">
+  <div class="grid-example col s12" style="margin-top:30px"><span class="flow-text">联系我们</span></div>
+  <form action="/welcome" method="post">
+    <div class="row">
+      <div class="input-field col s4"></div>
+      <div class="input-field col s4">
+        <input placeholder="姓名" name='name' id="first_name" type="text" class="validate" required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s4"></div>
+      <div class="input-field col s4">
+        <input placeholder="联系方式" name='num' id="last_name" type="text" class="validate" required>
+      </div>
+    </div>
+    <button type="submit" class="waves-effect waves-light btn">点击提交</button>
+  </form>
+</body>
+</html>
